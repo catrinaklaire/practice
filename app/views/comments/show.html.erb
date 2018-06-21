@@ -1,0 +1,21 @@
+<h3>
+  <strong>
+	  <%= @comment.user.email %> says: 
+  </strong> 
+  <%= @comment.content %> <br/ >
+</h3>
+
+<p>
+  <%= render @comment.comments %>  
+</p>
+  
+<p>
+  <strong>Comment:</strong><br />
+
+  <%= form_for @comment, url: comment_comments_path(@comment) do |f| %>
+	  <%= f.text_area :content %><br /><br />
+	  <%= f.submit %>
+	<% end %>
+</p>
+
+

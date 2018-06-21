@@ -1,17 +1,18 @@
-class CommentsController < ApplicationController
+class NestedCommentsController < ApplicationController
 	before_action :set_post
 	before_action :set_comment, except: [:new, :create]
+  before_action :set_parent_comment
 
 	def index
-		@comment = @post.comments
+    @comment = @comment.comment
 	end
 
 	def new
-		@comment = @post.comments.new()
+    @comment = @comment.Comment.new()
 	end
 
 	def create
-		@comment = @post.comments.build({user: current_user}.merge(comment_params))
+		@comment = @comment.comments.build({user: current_user}.merge(comment_params))
 		if @comment.save
 			redirect_to post_path(@post), notice: 'Comment was successfully created.'
 		else
@@ -20,7 +21,7 @@ class CommentsController < ApplicationController
 	end
 
 	def show
-    @new_comment = @comment.comments.new
+
   end
 
 	def edit
@@ -41,10 +42,14 @@ class CommentsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-
     def set_comment
-      @comment = @post.comments.find(params[:id])
+    	@comment = Comment.find(params[:id])
     end
+
+    def set_parent_comment
+      @parent_comment = Comment.find(params[:comment_id])
+    end
+
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def comment_params
@@ -55,5 +60,6 @@ class CommentsController < ApplicationController
       return unless params[:post_id]
     	@post = Post.find(params[:post_id])
     end
+
 
 end
