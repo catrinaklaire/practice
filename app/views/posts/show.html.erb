@@ -16,16 +16,16 @@
 </p>
 
 <p>
-  <%= render @post.comments %>  
+  <%= render @comments %>
 </p>
 
 <p>
   <strong>Comment:</strong><br />
 
-	<%= form_for @comment, url: post_comments_path(@post) do |f| %>
-	  <%= f.text_area :content %><br /><br />
-	  <%= f.submit %>
-	<% end %>
+  <%= form_for @comment, url: post_comments_path(@post) do |f| %>
+    <%= f.text_area :content %><br /><br />
+    <%= f.submit %>
+  <% end %>
 </p>
 
 <%= link_to 'Edit', edit_post_path(@post) %> |
